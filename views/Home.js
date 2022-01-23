@@ -6,6 +6,10 @@ const Home = () => {
   const [selectTo, setSelectTo] = useState('feet');
   const [lengthValFrom, setLengthValFrom] = useState('');
   const [lengthResult, setLengthResult] = useState('');
+  const [selectWTFrom, setSelectWTFrom] = useState('kilograms');
+  const [selectWTTo, setSelectWTTo] = useState('pounds');
+  const [weightValFrom, setWeightValFrom] = useState('');
+  const [weightResult, setWeightResult] = useState('');
 
 
   const convertLength = () => {
@@ -27,6 +31,19 @@ const Home = () => {
     }
   }
 
+  const convertWT = () => {
+    if(!weightValFrom) {
+      alert('We need a value to convert')
+      return;
+    }
+    if (selectWTFrom === 'kilograms' && selectWTTo === 'pounds') {
+      setWeightResult(parseInt(weightValFrom) * 2.20462);
+    }
+    if (selectWTFrom === 'pounds' && selectWTTo === 'kilograms') {
+      setWeightResult(parseInt(weightValFrom) / 2.20462);
+    }
+  }
+
   return (
     <div>
       <div className="hometext">
@@ -37,12 +54,7 @@ const Home = () => {
       <div className="lengthoptions">
         <select name="from" className="lengthfrom" defaultValue="inches" onChange={e => setSelectFrom(e.target.value)}>
           <option value="inches">Inches</option>
-          <option value="feet">Feet</option>
           <option value="millimeters">Millimeters</option>
-          <option value="meters">Meters</option>
-          <option value="yards">Yards</option>
-          <option value="miles">Miles</option>
-          <option value="kilometers">Kilometers</option>
         </select>
         <input 
           className="lengthinput" 
@@ -51,13 +63,35 @@ const Home = () => {
           value={lengthValFrom}
           onChange={ev => setLengthValFrom(ev.target.value)} 
         />
-        <select name="to" className="lengthto" defaultValue="feet" onChange={e => setSelectTo(e.target.value)}>
+        <select name="to" className="lengthto" defaultValue="millimeters" onChange={e => setSelectTo(e.target.value)}>
           <option value="inches">Inches</option>
-          <option value="feet">Feet</option>
           <option value="millimeters">Millimeters</option>
         </select>
         <div>{lengthResult}</div>
-        <button className="convertbutton" id="convert" /*onKeyPress={(ev) => lookForEnter(ev)}*/ onClick={() => convertLength()}>Convert</button>
+        <button className="convertbutton" id="convert" onKeyPress={(ev) => lookForEnter(ev)} onClick={() => convertLength()}>Convert</button>
+      </div>
+      <div className="weightoptions">
+      <select name="from" className="weightfrom" defaultValue="kilograms" onChange={e => setSelectWTFrom(e.target.value)}>
+          <option value="pounds">Pounds</option>
+          <option value="ounces">Ounces</option>
+          <option value="kilograms">Kilograms</option>
+          <option value="grams">Grams</option>
+        </select>
+        <input 
+          className="weightinput" 
+          type="text" 
+          placeholder="Enter Value" 
+          value={weightValFrom}
+          onChange={ev => setWeightValFrom(ev.target.value)} 
+        />
+        <select name="to" className="weightto" defaultValue="pounds" onChange={e => setSelectWTTo(e.target.value)}>
+          <option value="pounds">Pounds</option>
+          <option value="ounces">Ounces</option>
+          <option value="kilograms">Kilograms</option>
+          <option value="grams">Grams</option>
+        </select>
+        <div>{weightResult}</div>
+        <button className="convertbutton" id="convert" /*onKeyPress={(ev) => lookForEnter(ev)}*/ onClick={() => convertWT()}>Convert</button>
       </div>
     </div>
   )
